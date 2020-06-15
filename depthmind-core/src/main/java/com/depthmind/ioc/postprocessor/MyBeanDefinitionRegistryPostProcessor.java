@@ -6,10 +6,14 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author liuhan
+ */
 @Component
 public class MyBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+		//registry.registerBeanDefinition();
         System.out.println("MyBeanDefinitionRegistryPostProcessor...postProcessBeanDefinitionRegistry");
     }
 
