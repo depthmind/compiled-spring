@@ -228,6 +228,7 @@ class ConfigurationClassParser {
 
 		ConfigurationClass existingClass = this.configurationClasses.get(configClass);
 		if (existingClass != null) {
+			// 是否被import
 			if (configClass.isImported()) {
 				if (existingClass.isImported()) {
 					existingClass.mergeImportedBy(configClass);
@@ -254,6 +255,13 @@ class ConfigurationClassParser {
 	}
 
 	/**
+	 * 处理顺序：
+	 * 1、@Component
+	 * 2、@Import
+	 * 3、@ImportResource
+	 * 4、@Bean
+	 * 5、Process default methods on interfaces 这里没搞懂
+	 * 6、Process superclass, if any 这里没搞懂
 	 * Apply processing and build a complete {@link ConfigurationClass} by reading the
 	 * annotations, members and methods from the source class. This method can be called
 	 * multiple times as relevant sources are discovered.

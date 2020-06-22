@@ -197,6 +197,13 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 		}
 	}
 
+	/**
+	 *
+	 * 解析类型过滤器
+	 * @param element
+	 * @param scanner
+	 * @param parserContext
+	 */
 	protected void parseTypeFilters(Element element, ClassPathBeanDefinitionScanner scanner, ParserContext parserContext) {
 		// Parse exclude and include filter elements.
 		ClassLoader classLoader = scanner.getResourceLoader().getClassLoader();

@@ -11,6 +11,6 @@ dependencies {
 	compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.1'
 }
 
-test {
+/*test {
 	useJUnitPlatform()
-}
+}*/
