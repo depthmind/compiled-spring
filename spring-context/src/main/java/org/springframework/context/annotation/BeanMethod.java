@@ -39,6 +39,7 @@ final class BeanMethod extends ConfigurationMethod {
 
 	@Override
 	public void validate(ProblemReporter problemReporter) {
+		// 这里对加了static的方法不做验证，为什么加了static百分百不报错
 		if (getMetadata().isStatic()) {
 			// static @Bean methods have no constraints to validate -> return immediately
 			return;
@@ -46,6 +47,7 @@ final class BeanMethod extends ConfigurationMethod {
 
 		if (this.configurationClass.getMetadata().isAnnotated(Configuration.class.getName())) {
 			if (!getMetadata().isOverridable()) {
+				// 方法不能被重写就报错
 				// instance @Bean methods within @Configuration classes must be overridable to accommodate CGLIB
 				problemReporter.error(new NonOverridableMethodError());
 			}

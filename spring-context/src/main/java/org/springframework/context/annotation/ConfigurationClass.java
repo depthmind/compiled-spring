@@ -38,6 +38,7 @@ import org.springframework.util.ClassUtils;
  * Represents a user-defined {@link Configuration @Configuration} class.
  * Includes a set of {@link Bean} methods, including all such methods
  * defined in the ancestry of the class, in a 'flattened-out' manner.
+ * 一个平展的方式
  *
  * @author Chris Beams
  * @author Juergen Hoeller
@@ -82,6 +83,7 @@ final class ConfigurationClass {
 	}
 
 	/**
+	 * 当前ConfigurationClass被其他import
 	 * Create a new {@link ConfigurationClass} representing a class that was imported
 	 * using the {@link Import} annotation or automatically processed as a nested
 	 * configuration class (if importedBy is not {@code null}).
@@ -158,6 +160,7 @@ final class ConfigurationClass {
 	}
 
 	/**
+	 * 是否被其他configuration类import，被其他配置类import的话会有什么特殊处理
 	 * Return whether this configuration class was registered via @{@link Import} or
 	 * automatically registered due to being nested within another configuration class.
 	 * @since 3.1.1
@@ -210,13 +213,17 @@ final class ConfigurationClass {
 	}
 
 	public void validate(ProblemReporter problemReporter) {
+		// 由于CGLIB的限制，一个配置类不应该是final的，因为CGLIB基于继承，final不能被重写
+		// 这里给出来一个特例
 		// A configuration class may not be final (CGLIB limitation) unless it declares proxyBeanMethods=false
 		Map<String, Object> attributes = this.metadata.getAnnotationAttributes(Configuration.class.getName());
 		if (attributes != null && (Boolean) attributes.get("proxyBeanMethods")) {
 			if (this.metadata.isFinal()) {
+				// final了就报告错误
 				problemReporter.error(new FinalConfigurationProblem());
 			}
 			for (BeanMethod beanMethod : this.beanMethods) {
+				// 加了static的方法究竟有没有被enhance
 				beanMethod.validate(problemReporter);
 			}
 		}

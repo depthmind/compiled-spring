@@ -56,6 +56,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.ReflectionUtils;
 
 /**
+ * 所有加了@Bean注解的方法都会在CGLIB生成的子类中重写
  * Enhances {@link Configuration} classes by generating a CGLIB subclass which
  * interacts with the Spring container to respect bean scoping semantics for
  * {@code @Bean} methods. Each such {@code @Bean} method will be overridden in
@@ -115,6 +116,7 @@ class ConfigurationClassEnhancer {
 	}
 
 	/**
+	 * 增强器
 	 * Creates a new CGLIB {@link Enhancer} instance.
 	 */
 	private Enhancer newEnhancer(Class<?> configSuperClass, @Nullable ClassLoader classLoader) {
@@ -123,6 +125,7 @@ class ConfigurationClassEnhancer {
 		enhancer.setInterfaces(new Class<?>[] {EnhancedConfiguration.class});
 		enhancer.setUseFactory(false);
 		enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
+		// 生成字节码的策略
 		enhancer.setStrategy(new BeanFactoryAwareGeneratorStrategy(classLoader));
 		enhancer.setCallbackFilter(CALLBACK_FILTER);
 		enhancer.setCallbackTypes(CALLBACK_FILTER.getCallbackTypes());
@@ -147,8 +150,11 @@ class ConfigurationClassEnhancer {
 	 * Facilitates idempotent behavior for {@link ConfigurationClassEnhancer#enhance}
 	 * through checking to see if candidate classes are already assignable to it, e.g.
 	 * have already been enhanced.
+	 * 所有被增强的配置类都要能访问BeanFactory，比如加了@Bean的方法，
+	 * 在被增强之后会判断能否从beanFactory中获取bean，如果可以就不走父类的逻辑了，即不去new
 	 * <p>Also extends {@link BeanFactoryAware}, as all enhanced {@code @Configuration}
 	 * classes require access to the {@link BeanFactory} that created them.
+	 * 这个接口本来打算只给框架内部用的，但是访问权限是public的，难道是给程序的代码生成子类的时候会用到吗？
 	 * <p>Note that this interface is intended for framework-internal use only, however
 	 * must remain public in order to allow access to subclasses generated from other
 	 * packages (i.e. user code).
