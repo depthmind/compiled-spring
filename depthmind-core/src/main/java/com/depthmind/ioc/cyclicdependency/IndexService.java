@@ -3,7 +3,10 @@ package com.depthmind.ioc.cyclicdependency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+/**
+ * @author liuhan
+ */
+@Component("indexService")
 public class IndexService {
 
     @Autowired

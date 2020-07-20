@@ -5,11 +5,13 @@ import com.depthmind.configuration.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author liuhan
  */
 @Configuration
+@Import(ImportedConfiguration.class)
 public class MyConfiguration {
 	@Bean
 	public UserService userService() {

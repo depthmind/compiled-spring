@@ -4,11 +4,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
-public class LogTest {
+public class JCLTest {
 	@Test
 	public void test() {
-		Log log = LogFactory.getLog(LogTest.class);
-		System.out.println("这里打印日志");
-		log.error("------LogTest.......");
+		Log logger = LogFactory.getLog(JCLTest.class);
+		logger.error("JCL");
 	}
 }

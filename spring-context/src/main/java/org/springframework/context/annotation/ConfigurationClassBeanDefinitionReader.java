@@ -111,6 +111,8 @@ class ConfigurationClassBeanDefinitionReader {
 
 
 	/**
+	 * 这个set里的ConfigurationClass如果是被import的，那他在这个时候beanName是nul
+	 * 他还不是一个bd
 	 * Read {@code configurationModel}, registering bean definitions
 	 * with the registry based on its contents.
 	 */
@@ -140,6 +142,7 @@ class ConfigurationClassBeanDefinitionReader {
 		if (configClass.isImported()) {
 			registerBeanDefinitionForImportedConfigurationClass(configClass);
 		}
+		// 处理@Bean，注册bd
 		for (BeanMethod beanMethod : configClass.getBeanMethods()) {
 			loadBeanDefinitionsForBeanMethod(beanMethod);
 		}
@@ -149,6 +152,7 @@ class ConfigurationClassBeanDefinitionReader {
 	}
 
 	/**
+	 * 把配置类自身作为一个bd注册到容器
 	 * Register the {@link Configuration} class itself as a bean definition.
 	 */
 	private void registerBeanDefinitionForImportedConfigurationClass(ConfigurationClass configClass) {
@@ -449,6 +453,11 @@ class ConfigurationClassBeanDefinitionReader {
 
 		private final Map<ConfigurationClass, Boolean> skipped = new HashMap<>();
 
+		/**
+		 *
+		 * 如果当前配置类被import，这里会判断递归调用，判断import当前配置类的配置类是否要skip
+		 * 并且会缓存到一个map，之后处理import当前配置类的配置类时直接从map取
+		 */
 		public boolean shouldSkip(ConfigurationClass configClass) {
 			Boolean skip = this.skipped.get(configClass);
 			if (skip == null) {

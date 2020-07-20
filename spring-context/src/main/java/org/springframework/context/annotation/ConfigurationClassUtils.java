@@ -74,6 +74,7 @@ abstract class ConfigurationClassUtils {
 
 
 	/**
+	 * 这里也会将configuration class设置为full 或者 lite
 	 * Check whether the given bean definition is a candidate for a configuration class
 	 * (or a nested component class declared within a configuration/component class,
 	 * to be auto-registered as well), and mark it accordingly.
@@ -95,6 +96,7 @@ abstract class ConfigurationClassUtils {
 			// Can reuse the pre-parsed metadata from the given BeanDefinition...
 			metadata = ((AnnotatedBeanDefinition) beanDef).getMetadata();
 		}
+		// 这里应该是处理Spring内部的bd
 		else if (beanDef instanceof AbstractBeanDefinition && ((AbstractBeanDefinition) beanDef).hasBeanClass()) {
 			// Check already loaded Class if present...
 			// since we possibly can't even load the class file for this Class.
@@ -122,6 +124,7 @@ abstract class ConfigurationClassUtils {
 		}
 
 		Map<String, Object> config = metadata.getAnnotationAttributes(Configuration.class.getName());
+		// proxyBeanMethods被设置未false时将不会代理BeanMethod
 		if (config != null && !Boolean.FALSE.equals(config.get("proxyBeanMethods"))) {
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_FULL);
 		}
@@ -150,6 +153,7 @@ abstract class ConfigurationClassUtils {
 	 */
 	public static boolean isConfigurationCandidate(AnnotationMetadata metadata) {
 		// Do not consider an interface or an annotation...
+		// 不能是接口或注解
 		if (metadata.isInterface()) {
 			return false;
 		}
@@ -161,6 +165,7 @@ abstract class ConfigurationClassUtils {
 			}
 		}
 
+		// 这里应该可以理解为如果没有加@Configuration注解，就看是否加了@Bean注解，如果加了也认为这是一个配置类
 		// Finally, let's look for @Bean methods...
 		try {
 			return metadata.hasAnnotatedMethods(Bean.class.getName());

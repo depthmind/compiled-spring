@@ -56,6 +56,7 @@ final class LogAdapter {
 				logApi = LogApi.SLF4J_LAL;
 			}
 			else {
+				// spring5 用的是Log4j2
 				// Use Log4j 2.x directly, including location awareness support
 				logApi = LogApi.LOG4J;
 			}

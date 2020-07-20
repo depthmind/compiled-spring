@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Aspect
-@Component
+//@Component
 public class MyAspect {
 
     @Pointcut("execution(* com.depthmind.ioc.cyclicdependency.IndexService..*(..))")
