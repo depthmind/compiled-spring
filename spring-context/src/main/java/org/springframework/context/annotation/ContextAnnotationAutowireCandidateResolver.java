@@ -36,6 +36,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
+ * 处理延迟加载
  * Complete implementation of the
  * {@link org.springframework.beans.factory.support.AutowireCandidateResolver} strategy
  * interface, providing support for qualifier annotations as well as for lazy resolution

@@ -12,5 +12,4 @@ public class BeanFactoryTest {
 		UserService userService = (UserService) beanFactory.getBean("userService");
 		userService.test();
 	}
-	Role
 }
