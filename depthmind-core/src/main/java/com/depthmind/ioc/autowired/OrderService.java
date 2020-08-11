@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
-//	@Autowired
+	@Autowired
 	UserService userService;
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
 
 	public UserService getUserService() {
 		return userService;

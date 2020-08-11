@@ -9,8 +9,11 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.stereotype.Component;
 
-@Component
-public class AutowiredBeanDefinitionRegistryPostPorcessor implements BeanDefinitionRegistryPostProcessor {
+/**
+ * @author liuhan
+ */
+//@Component
+public class AutowiredBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
 	@Override
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
