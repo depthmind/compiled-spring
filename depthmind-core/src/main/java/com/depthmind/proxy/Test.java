@@ -10,7 +10,7 @@ public class Test {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext configApplicationContext =
 				new AnnotationConfigApplicationContext(AppConfig.class);
-		UserDao useDao = (UserDao) configApplicationContext.getBean("useDao");
+		UserDao useDao = (UserDao) configApplicationContext.getBean("userDao");
 		useDao.query();
 	}
 }

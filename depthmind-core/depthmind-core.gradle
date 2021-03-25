@@ -5,6 +5,8 @@ dependencies {
 	compile(project(":spring-aop"))
 	compile(project(":spring-web"))
 	compile(project(":spring-test"))
+	compile(project(":spring-tx"))
+	compile(project(":spring-jdbc"))
 	compile("org.aspectj:aspectjweaver:1.9.5")
 
 	compile group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
@@ -14,6 +16,14 @@ dependencies {
 
 	//dom4j
 	compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+
+	// 数据源
+	compile group: 'com.alibaba', name: 'druid', version: '1.1.6'
+
+	implementation group: 'org.apache.rocketmq', name: 'rocketmq-client', version: '4.8.0'
+	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+
 }
 
 /*test {

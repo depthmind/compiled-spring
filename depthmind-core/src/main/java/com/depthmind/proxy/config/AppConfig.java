@@ -9,6 +9,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @Configuration
 @ComponentScan("com.depthmind.proxy")
-@EnableAspectJAutoProxy(proxyTargetClass = false)
+@EnableAspectJAutoProxy
 public class AppConfig {
 }

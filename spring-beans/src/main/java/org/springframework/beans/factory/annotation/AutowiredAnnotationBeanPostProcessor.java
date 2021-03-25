@@ -253,12 +253,20 @@ public class AutowiredAnnotationBeanPostProcessor extends InstantiationAwareBean
 		this.injectionMetadataCache.remove(beanName);
 	}
 
+	/**
+	 * 推断候选构造器
+	 * @param beanClass
+	 * @param beanName
+	 * @return
+	 * @throws BeanCreationException
+	 */
 	@Override
 	@Nullable
 	public Constructor<?>[] determineCandidateConstructors(Class<?> beanClass, final String beanName)
 			throws BeanCreationException {
 
 		// Let's check for lookup methods here...
+		// 检查是否被@Lookup注解
 		if (!this.lookupMethodsChecked.contains(beanName)) {
 			if (AnnotationUtils.isCandidateClass(beanClass, Lookup.class)) {
 				try {
@@ -301,6 +309,8 @@ public class AutowiredAnnotationBeanPostProcessor extends InstantiationAwareBean
 				if (candidateConstructors == null) {
 					Constructor<?>[] rawCandidates;
 					try {
+						// 通过一个native方法private native Constructor<T>[] getDeclaredConstructors0(boolean publicOnly);
+						// 获取代理类的构造器
 						rawCandidates = beanClass.getDeclaredConstructors();
 					}
 					catch (Throwable ex) {
@@ -311,9 +321,11 @@ public class AutowiredAnnotationBeanPostProcessor extends InstantiationAwareBean
 					List<Constructor<?>> candidates = new ArrayList<>(rawCandidates.length);
 					Constructor<?> requiredConstructor = null;
 					Constructor<?> defaultConstructor = null;
+					// beanClass是Kotlin类时才起作用，否则findPrimaryConstructor会返回null
 					Constructor<?> primaryConstructor = BeanUtils.findPrimaryConstructor(beanClass);
 					int nonSyntheticConstructors = 0;
 					for (Constructor<?> candidate : rawCandidates) {
+						// 判断合成类
 						if (!candidate.isSynthetic()) {
 							nonSyntheticConstructors++;
 						}
@@ -322,9 +334,13 @@ public class AutowiredAnnotationBeanPostProcessor extends InstantiationAwareBean
 						}
 						MergedAnnotation<?> ann = findAutowiredAnnotation(candidate);
 						if (ann == null) {
+							// 如果beanClass被代理了则返回其父类
 							Class<?> userClass = ClassUtils.getUserClass(beanClass);
+							// 这里处理代理类的原始类（目标类）
 							if (userClass != beanClass) {
+								// 说明被代理了
 								try {
+									// 找到参数匹配的构造器，包括参数个数和参数类型
 									Constructor<?> superCtor =
 											userClass.getDeclaredConstructor(candidate.getParameterTypes());
 									ann = findAutowiredAnnotation(superCtor);

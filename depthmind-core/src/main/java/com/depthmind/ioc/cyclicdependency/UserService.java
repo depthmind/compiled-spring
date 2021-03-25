@@ -2,13 +2,14 @@ package com.depthmind.ioc.cyclicdependency;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 /**
  * @author liuhan
  */
-@Component
+//@Service
 public class UserService {
 
 //	@Resource(name = "indexService")
@@ -16,7 +17,7 @@ public class UserService {
     private IndexService indexService;
 
     public UserService() {
-		indexService.sout();
+		//indexService.sout();
         System.out.println("UserService Constructor");
     }
 }

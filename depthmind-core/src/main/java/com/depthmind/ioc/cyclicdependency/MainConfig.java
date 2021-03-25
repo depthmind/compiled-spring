@@ -9,6 +9,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @Configuration
 @ComponentScan(value = "com.depthmind.ioc.cyclicdependency")
-//@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy
 public class MainConfig {
 }

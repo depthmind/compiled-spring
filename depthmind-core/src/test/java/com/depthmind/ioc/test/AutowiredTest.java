@@ -13,8 +13,8 @@ public class AutowiredTest {
 
 	@Test
 	public void test() {
-		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
-		//ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
+		AnnotationConfigApplicationContext applicationContext
+				= new AnnotationConfigApplicationContext(AppConfig.class);
 
 		System.out.println(applicationContext.getBean(OrderService.class).getUserService());
 

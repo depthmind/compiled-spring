@@ -11,6 +11,6 @@ public class FactoryBeanTest {
 //		System.out.println("userDao---" + bean);
 
 		UserService userService = annotationConfigApplicationContext.getBean(UserService.class);
-		userService.list();
+//		userService.list();
 	}
 }

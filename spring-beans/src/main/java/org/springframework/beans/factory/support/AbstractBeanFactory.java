@@ -246,6 +246,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		Object bean;
 
 		// Eagerly check singleton cache for manually registered singletons.
+		// 检查手动注册的单例对象，循环依赖时，第一次这里始终null，第二次可以获取到被依赖的bean
 		Object sharedInstance = getSingleton(beanName);
 		if (sharedInstance != null && args == null) {
 			if (logger.isTraceEnabled()) {
@@ -1151,6 +1152,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	}
 
 	/**
+	 * 根据给定的bd销毁Bean实例，通常是prototype类型的
 	 * Destroy the given bean instance (usually a prototype instance
 	 * obtained from this factory) according to the given bean definition.
 	 * @param beanName the name of the bean definition

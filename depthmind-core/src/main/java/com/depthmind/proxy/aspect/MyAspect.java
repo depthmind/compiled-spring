@@ -14,10 +14,14 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class MyAspect {
-	@DeclareParents(value = "com.depthmind.proxy.UserDao", defaultImpl = UserDaoImpl.class)
-	UserDao dao;
+	/**
+	 * ---引入----实现
+	 */
+//	@DeclareParents(value = "com.depthmind.proxy.UserDao", defaultImpl = UserDaoImpl.class)
+//	UserDao dao;
 
-	@Pointcut("execution(public * *(..))")
+//	@Pointcut("execution(public * com.depthmind.proxy.*(..))")
+	@Pointcut("within(com.depthmind.proxy..*)")
 	public void executionPointcut(){}
 
 	@Before(value = "executionPointcut()")

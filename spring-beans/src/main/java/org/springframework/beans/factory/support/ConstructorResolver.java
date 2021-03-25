@@ -279,6 +279,8 @@ class ConstructorResolver {
 						"Could not resolve matching constructor " +
 						"(hint: specify index/type/name arguments for simple parameters to avoid type ambiguities)");
 			}
+			// mbd.isLenientConstructorResolution() BD此属性默认为true，是指使用宽松的构造方法选择策略
+			// 否则遇到有不明确的构造方法Spring将无法选择
 			else if (ambiguousConstructors != null && !mbd.isLenientConstructorResolution()) {
 				throw new BeanCreationException(mbd.getResourceDescription(), beanName,
 						"Ambiguous constructor matches found in bean '" + beanName + "' " +

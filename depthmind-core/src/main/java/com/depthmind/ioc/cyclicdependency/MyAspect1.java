@@ -4,7 +4,6 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,18 +11,18 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class MyAspect {
+public class MyAspect1 {
 
     @Pointcut("execution(* com.depthmind.ioc.cyclicdependency.IndexService..*(..))")
     public void pointcut() {}
 
     @Before("pointcut()")
-    public void aVoid() {
-        System.out.println("111");
+    public void a1() {
+        System.out.println("a111");
     }
 
     @After("pointcut()")
-    public void aa() {
-        System.out.println("1111222");
+    public void a2() {
+        System.out.println("a1111222");
     }
 }
